@@ -17,7 +17,7 @@ app.add_middleware(
 def read_root():
     return {"status": "ok", "message": "Expense Tracker API is running"}
 
-from .ocr_service import analyze_bill_mock
+from .ocr_service import analyze_bill
 
 @app.post("/scan-bill", response_model=ExpenseResponse)
 async def scan_bill(file: UploadFile = File(...)):
@@ -25,7 +25,7 @@ async def scan_bill(file: UploadFile = File(...)):
     # verify it's an image (simplistic check)
     # in a real app, we'd check mime types
     
-    # Use Mock Service for now
-    data = await analyze_bill_mock(content)
+    # Use Real Service
+    data = await analyze_bill(content)
     
     return data
